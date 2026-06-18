@@ -1,0 +1,29 @@
+class TrafficControlSystem:
+  def __init__(self):
+    self.traffic_data={}
+
+  def add_intersection(self,intersection:str,vehicle_count:int)->dict:
+    self.traffic_data[intersection]=vehicle_count
+    return self.traffic_data
+
+  def update_vehicle_count(self,intersection:str,count:int)->dict:
+    if intersection not in self.traffic_data:
+      return "Error: Intersection not found"
+    
+    self.traffic_data[intersection]=count
+
+    return self.traffic_data
+
+  def get_congested_intersections(self,congestion_threshold:int)->dict:
+    return {inter:count for inter,count in self.traffic_data.items() if count>congestion_threshold}
+
+  def adjust_traffic_signals(self)->dict:
+    adjusted_signals={}
+    for intersection,count in self.traffic_data.items():
+      if count>80:
+        adjusted_signals[intersection]="Long Green"
+      elif 40<=count<=80:
+        adjusted_signals[intersection]="Normal Green"
+      else:
+        adjusted_signals[intersection]="Short Green"
+    return adjusted_signals
